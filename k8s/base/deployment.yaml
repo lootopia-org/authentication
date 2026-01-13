@@ -16,14 +16,27 @@ spec:
     spec:
       imagePullSecrets:
         - name: ghcr-secret
+      initContainers:
+        - name: wait-for-postgres
+          image: postgres:16
+          command:
+            - sh
+            - -c
+            - |
+              until pg_isready -h postgres -p 5432 -U "$POSTGRES_USER"; do
+                sleep 2
+              done
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: authentication-secret
+                  key: POSTGRES_USER
+
       containers:
         - name: authentication
           image: ghcr.io/lootopia-org/core:latest
           imagePullPolicy: IfNotPresent
-          volumeMounts:
-            - name: env-file
-              mountPath: /app/.env
-              subPath: .env
           ports:
             - containerPort: 50051
               name: grpc
