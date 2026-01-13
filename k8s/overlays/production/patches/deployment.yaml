@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authentication
+spec:
+  replicas: 3
+  template:
+    spec:
+      containers:
+        - name: authentication
+          env:
+            - name: ENV
+              value: "production"
+

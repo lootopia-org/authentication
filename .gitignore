@@ -1,0 +1,39 @@
+# Rust
+/target/
+**/*.rs.bk
+*.pdb
+
+# Environment variables - NEVER commit these!
+.env
+.env.local
+.env.*.local
+.env.docker
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Generated files
+/generated/
+
+# Logs
+*.log
+logs/
+
+# Backup files
+*.bak
+*.tmp
+
+# OS
+.DS_Store
+Thumbs.db
+
