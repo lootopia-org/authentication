@@ -2,7 +2,8 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: postgres
-  argocd.argoproj.io/sync-wave: "0"
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   serviceName: postgres
   replicas: 1
@@ -53,20 +54,20 @@ spec:
         livenessProbe:
           exec:
             command:
-            - pg_isready
-            - -U
-            - $(POSTGRES_USER)
+            - sh
+            - -c
+            - pg_isready -U "${POSTGRES_USER}"
           initialDelaySeconds: 30
           periodSeconds: 10
         readinessProbe:
           exec:
             command:
-            - pg_isready
-            - -U
-            - $(POSTGRES_USER)
+            - sh
+            - -c
+            - pg_isready -U "${POSTGRES_USER}"
           initialDelaySeconds: 5
           periodSeconds: 5
       volumes:
-      - name: postgres-storage
-        persistentVolumeClaim:
-          claimName: postgres-pvc
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: postgres-pvc
