@@ -32,6 +32,13 @@ spec:
                 secretKeyRef:
                   name: authentication-secret
                   key: POSTGRES_USER
+          resources:
+            requests:
+              cpu: "10m"
+              memory: "10Mi"
+            limits:
+              cpu: "20m"
+              memory: "20Mi"
 
       containers:
         - name: authentication
@@ -57,7 +64,9 @@ spec:
                   name: authentication-secret
                   key: POSTGRES_DB
             - name: DATABASE_URL
-              value: postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@postgres:5432/$(POSTGRES_DB)
+                secretKeyRef:
+                  name: authentication-secret
+                  key: DATABASE_URL 
       resources:
           requests:
             cpu: "50m"
