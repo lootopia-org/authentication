@@ -46,11 +46,11 @@ spec:
           mountPath: /var/lib/postgresql/data
         resources:
           requests:
-            memory: "100Mi"
-            cpu: "50m"
+            memory: "256Mi"
+            cpu: "100m"
           limits:
-            memory: "100Mi"
-            cpu: "50m"
+            memory: "300Mi"
+            cpu: "150m"
         livenessProbe:
           exec:
             command:
@@ -67,6 +67,8 @@ spec:
             - pg_isready -U "${POSTGRES_USER}"
           initialDelaySeconds: 5
           periodSeconds: 5
+          timeoutSeconds: 5
+          failureThreshold: 3
       volumes:
         - name: postgres-storage
           persistentVolumeClaim:
