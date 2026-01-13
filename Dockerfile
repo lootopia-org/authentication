@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     pkg-config \
     libssl-dev \
+    protobuf-compiler \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
