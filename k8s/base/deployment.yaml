@@ -23,7 +23,7 @@ spec:
             - sh
             - -c
             - |
-              until pg_isready -h postgres -p 5432 -U "$POSTGRES_USER"; do
+              until pg_isready -h postgres -p 5432 -U "${POSTGRES_USER}"; do
                 sleep 2
               done
           env:
@@ -68,10 +68,10 @@ spec:
                 secretKeyRef:
                   name: authentication-secret
                   key: DATABASE_URL 
-      resources:
-          requests:
-            cpu: "50m"
-            memory: "128Mi"
-          limits:
-            cpu: "100m"
-            memory: "512Mi"
+          resources:
+              requests:
+                cpu: "50m"
+                memory: "128Mi"
+              limits:
+                cpu: "100m"
+                memory: "512Mi"
