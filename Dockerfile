@@ -1,5 +1,8 @@
 FROM rust:slim AS builder
 
+ENV OPENSSL_NO_VENDOR=1
+ENV PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig
+
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y \
@@ -19,7 +22,7 @@ RUN cargo install diesel_cli --no-default-features --features postgres
 
 COPY . .
 
-RUN cargo build --release
+RUN cargo build --release --verbose
 
 FROM debian:bookworm-slim
 
@@ -36,5 +39,5 @@ COPY --from=builder /usr/local/cargo/bin/diesel /usr/local/bin/diesel
 COPY migrations ./migrations
 COPY diesel.toml .
 
-CMD ["diesel", "run", "migrations", "&&", "authentication"]
+CMD ["sh", "-c", "diesel migration run && authentication"]
 
