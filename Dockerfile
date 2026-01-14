@@ -29,7 +29,11 @@ FROM rust:bookworm-slim
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y \
-    libpq5 \
+    build-essential \
+    libpq-dev \
+    pkg-config \
+    libssl-dev \
+    protobuf-compiler \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
