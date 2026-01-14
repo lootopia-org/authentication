@@ -18,7 +18,7 @@ spec:
         - name: ghcr-secret
       containers:
         - name: authentication
-          image: ghcr.io/lootopia-org/core:latest
+          image: ghcr.io/lootopia-org/authentication:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 50051
