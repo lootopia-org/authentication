@@ -1,4 +1,4 @@
-FROM rust:slim AS builder
+FROM rust:bookworm AS builder
 
 ENV OPENSSL_NO_VENDOR=1
 ENV PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig
