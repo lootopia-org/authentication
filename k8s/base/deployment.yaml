@@ -23,31 +23,9 @@ spec:
           ports:
             - containerPort: 50051
               name: grpc
-          volumeMounts:
-            - name: env-file
-              mountPath: /app/.env
-              subPath: .env
-          env:
-            - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  name: authentication-secret
-                  key: POSTGRES_USER
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: authentication-secret
-                  key: POSTGRES_PASSWORD
-            - name: POSTGRES_DB
-              valueFrom:
-                secretKeyRef:
-                  name: authentication-secret
-                  key: POSTGRES_DB
-            - name: DATABASE_URL
-              valueFrom:
-                secretKeyRef:
-                  name: authentication-secret
-                  key: DATABASE_URL 
+          envFrom:
+            - secretRef:
+                name: authentication-secret
           resources:
               requests:
                 cpu: "50m"
@@ -55,7 +33,3 @@ spec:
               limits:
                 cpu: "100m"
                 memory: "512Mi"
-volumes:
-  - name: env-file
-    secret:
-      secretName: authentication-secret
