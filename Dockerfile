@@ -1,4 +1,4 @@
-FROM rust:1.75-bookworm AS builder
+FROM rust:trixie AS builder
 
 ENV OPENSSL_NO_VENDOR=1
 ENV PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig
@@ -18,20 +18,13 @@ COPY Cargo.toml Cargo.lock ./
 RUN mkdir src && echo "fn main() {}" > src/main.rs
 RUN cargo build --release
 RUN rm -rf src
-
-RUN cargo install diesel_cli \
-    --no-default-features \
-    --features postgres
+RUN cargo install diesel_cli --no-default-features --features postgres
 
 COPY . .
-RUN cargo build --release
 
-FROM debian:bookworm-slim
+RUN cargo build --release --verbose
 
-RUN apt-get update && apt-get install -y \
-    libpq5 \
-    ca-certificates \
-    && rm -rf /var/lib/apt/lists/*
+FROM rust:trixie
 
 WORKDIR /app
 
