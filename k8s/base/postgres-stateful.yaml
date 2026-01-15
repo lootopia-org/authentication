@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: postgres
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   serviceName: postgres
   replicas: 1
@@ -44,28 +46,30 @@ spec:
           mountPath: /var/lib/postgresql/data
         resources:
           requests:
-            memory: "100Mi"
-            cpu: "50m"
+            memory: "256Mi"
+            cpu: "100m"
           limits:
-            memory: "100Mi"
-            cpu: "50m"
+            memory: "300Mi"
+            cpu: "150m"
         livenessProbe:
           exec:
             command:
-            - pg_isready
-            - -U
-            - $(POSTGRES_USER)
+            - sh
+            - -c
+            - pg_isready -U "${POSTGRES_USER}"
           initialDelaySeconds: 30
           periodSeconds: 10
         readinessProbe:
           exec:
             command:
-            - pg_isready
-            - -U
-            - $(POSTGRES_USER)
+            - sh
+            - -c
+            - pg_isready -U "${POSTGRES_USER}"
           initialDelaySeconds: 5
           periodSeconds: 5
+          timeoutSeconds: 5
+          failureThreshold: 3
       volumes:
-      - name: postgres-storage
-        persistentVolumeClaim:
-          claimName: postgres-pvc
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: postgres-pvc

@@ -18,37 +18,18 @@ spec:
         - name: ghcr-secret
       containers:
         - name: authentication
-          image: ghcr.io/lootopia-org/core:latest
+          image: ghcr.io/lootopia-org/authentication:latest
           imagePullPolicy: IfNotPresent
-          volumeMounts:
-            - name: env-file
-              mountPath: /app/.env
-              subPath: .env
           ports:
             - containerPort: 50051
               name: grpc
-          env:
-            - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  name: authentication-secret
-                  key: POSTGRES_USER
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: authentication-secret
-                  key: POSTGRES_PASSWORD
-            - name: POSTGRES_DB
-              valueFrom:
-                secretKeyRef:
-                  name: authentication-secret
-                  key: POSTGRES_DB
-            - name: DATABASE_URL
-              value: postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@postgres:5432/$(POSTGRES_DB)
-        resources:
-            requests:
-              cpu: "50m"
-              memory: "128Mi"
-            limits:
-              cpu: "100m"
-              memory: "512Mi"
+          envFrom:
+            - secretRef:
+                name: authentication-secret
+          resources:
+              requests:
+                cpu: "50m"
+                memory: "128Mi"
+              limits:
+                cpu: "100m"
+                memory: "512Mi"
