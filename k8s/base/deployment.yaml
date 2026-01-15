@@ -23,6 +23,10 @@ spec:
           ports:
             - containerPort: 50051
               name: grpc
+          volumeMounts:
+            - name: env-file
+              mountPath: /app/.env
+              subPath: .env
           env:
             - name: POSTGRES_USER
               valueFrom:
@@ -51,3 +55,7 @@ spec:
               limits:
                 cpu: "100m"
                 memory: "512Mi"
+volumes:
+  - name: env-file
+    secret:
+      secretName: authentication-secret
