@@ -21,21 +21,21 @@ impl AuthenticationService for AuthService {
 
     async fn logout(
         &self,
-        request: Request<LogoutRequest>,
+        request: Request<Empty>,
     ) -> Result<Response<LogoutResponse>, Status> {
         self.logout_user(request).await
     }
 
     async fn refresh_token(
         &self,
-        request: Request<RefreshTokenRequest>,
+        request: Request<Empty>,
     ) -> Result<Response<RefreshTokenResponse>, Status> {
         self.refresh_access_token(request).await
     }
 
     async fn verify_token(
         &self,
-        request: Request<VerifyTokenRequest>,
+        request: Request<Empty>,
     ) -> Result<Response<VerifyTokenResponse>, Status> {
         self.verify_access_token(request).await
     }
@@ -57,7 +57,7 @@ impl AuthenticationService for AuthService {
 
     async fn delete_user(
         &self,
-        request: Request<DeleteUserRequest>,
+        request: Request<Empty>,
     ) -> Result<Response<DeleteUserResponse>, Status> {
         self.delete_user_account(request).await
     }
@@ -99,14 +99,14 @@ impl AuthenticationService for AuthService {
 
     async fn get_user_roles(
         &self,
-        request: Request<GetUserRolesRequest>,
+        request: Request<Empty>,
     ) -> Result<Response<GetUserRolesResponse>, Status> {
         self.get_roles_for_user(request).await
     }
 
     async fn get_auth_factors(
         &self,
-        request: Request<GetAuthFactorsRequest>,
+        request: Request<Empty>,
     ) -> Result<Response<GetAuthFactorsResponse>, Status> {
         self.get_auth_factors_for_user(request).await
     }

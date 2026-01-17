@@ -17,7 +17,7 @@ impl AuthService {
         request: Request<UpdateUserEmailRequest>,
     ) -> Result<Response<UpdateUserEmailResponse>, Status> {
         let auth_ctx = request.auth().cloned()?;
-        let req = request.into_inner()
+        let req = request.into_inner();
         let mut conn = self.conn()?;
     
         debug!("Update user email request for ID: {}", auth_ctx.user.id);
@@ -117,7 +117,7 @@ impl AuthService {
 
     pub async fn delete_user_account(
         &self,
-        request: Request<DeleteUserRequest>,
+        request: Request<Empty>,
     ) -> Result<Response<DeleteUserResponse>, Status> {
         let auth_ctx = request.auth()?;
 
