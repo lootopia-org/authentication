@@ -1,2 +1,0 @@
-ALTER TABLE email_otps
-    DROP COLUMN IF EXISTS lang;

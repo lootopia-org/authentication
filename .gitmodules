@@ -1,9 +1,9 @@
-[submodule "authentication/protos"]
-	path = authentication/protos
+[submodule "protos"]
+	path = protos
 	url = https://github.com/lootopia-org/protos.git
-[submodule "authentication/assets"]
-	path = authentication/assets
-	url = https://github.com/lootopia-org/assets.git
-[submodule "authentication/migrations"]
-	path = authentication/migrations
+[submodule "migrations"]
+	path = migrations
 	url = https://github.com/lootopia-org/migrations.git
+[submodule "assets"]
+	path = assets
+	url = https://github.com/lootopia-org/assets.git
