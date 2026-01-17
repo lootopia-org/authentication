@@ -398,7 +398,7 @@ impl AuthService {
 
     pub async fn logout_user(
         &self,
-        request: Request<LogoutRequest>,
+        request: Request<Empty>,
     ) -> Result<Response<LogoutResponse>, Status> {
         debug!("Logout request received");
 
@@ -452,7 +452,7 @@ impl AuthService {
 
     pub async fn refresh_access_token(
         &self,
-        request: Request<RefreshTokenRequest>,
+        request: Request<Empty>,
     ) -> Result<Response<RefreshTokenResponse>, Status> {
         debug!("Token refresh request received");
 
@@ -552,7 +552,7 @@ impl AuthService {
 
     pub async fn verify_access_token(
         &self,
-        request: Request<VerifyTokenRequest>,
+        request: Request<Empty>,
     ) -> Result<Response<VerifyTokenResponse>, Status> {
         let token = get_cookie_from_metadata(request.metadata(), ACCESS_TOKEN_COOKIE).ok_or_else(|| {
             warn!("No access token in request body or cookie");
