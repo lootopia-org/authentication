@@ -17,18 +17,19 @@ impl AuthService {
         request: Request<UpdateUserEmailRequest>,
     ) -> Result<Response<UpdateUserEmailResponse>, Status> {
         let auth_ctx = request.auth().cloned()?;
+        let req = request.into_inner()
         let mut conn = self.conn()?;
     
         debug!("Update user email request for ID: {}", auth_ctx.user.id);
     
-        if auth_ctx.user.email.is_empty() {
+        if req.new_email.is_empty() {
             return Err(Status::invalid_argument("Email cannot be empty"));
         }
     
         conn.transaction::<_, diesel::result::Error, _>(|conn| {
             diesel::update(users::table.find(auth_ctx.user.id))
                 .set((
-                    users::email.eq(&auth_ctx.user.email),
+                    users::email.eq(&req.new_email),
                     users::email_verified_at.eq(None::<DateTime<Utc>>),
                     users::updated_at.eq(Utc::now()),
                 ))
