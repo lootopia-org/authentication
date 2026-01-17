@@ -98,7 +98,7 @@ impl AuthService {
 
     pub async fn get_roles_for_user(
         &self,
-        request: Request<GetUserRolesRequest>,
+        request: Request<Empty>,
     ) -> Result<Response<GetUserRolesResponse>, Status> {
         let auth_ctx = request.auth()?;
         let role_names = auth_ctx.roles.clone();

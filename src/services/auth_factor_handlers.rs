@@ -36,7 +36,7 @@ impl AuthService {
 
     pub async fn get_auth_factors_for_user(
         &self,
-        request: Request<GetAuthFactorsRequest>,
+        request: Request<Empty>,
     ) -> Result<Response<GetAuthFactorsResponse>, Status> {
         let auth_ctx = request.auth().cloned()?;
         let mut conn = self.conn()?;
